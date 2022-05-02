@@ -41,12 +41,27 @@ def binary_search(seq, number):
             return middle
     return None
 
+def recursive_binary_search(seq, number):
+    mid = len(seq) // 2
+    if len(seq) == 1:
+        return mid if seq[mid] == number else None
+    elif seq[mid] == number:
+        return mid
+    else:
+        if seq[mid] < number:
+            callback_response = recursive_binary_search((seq[mid:]), number)
+            return mid + callback_response if callback_response is not None else None
+        else:
+            return recursive_binary_search((seq[:mid]), number)
+
 
 def main(file_name, number):
     sequence = read_data(file_name=file_name, key="ordered_numbers")
 
     # iterative binary search
     binary_search(sequence, number=number)
+    print(recursive_binary_search(sequence, 90))
+    print(binary_search(sequence, 90))
 
 
 if __name__ == "__main__":
